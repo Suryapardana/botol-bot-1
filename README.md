@@ -94,7 +94,7 @@ node index.js
 |       ☑      | hilih |
 |       ☑      | Forward to  |
 |       ☑      | Video to mp3  |
-|       ☑      | Translate  |
+|       ☑      | Play mp3 |
 
 ## Terima Kasih
 - [MhankBarBar](https://github.com/github.com/MhankBarBar)

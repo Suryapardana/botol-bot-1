@@ -1,3 +1,5 @@
+// aktifkan bila sering close sendiri
+//process.on('uncaughtException', console.error)
 const
 	{
 		WAConnection,
@@ -29,11 +31,13 @@ const ms = require('parse-ms')
 const toMs = require('ms')
 const figlet = require('figlet')
 const lolcatjs = require('lolcatjs')
+const phoneNum = require('awesome-phonenumber')
+const translate = require('./lib/translate')
 
 /* CALLBACK */
 const { wait, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
 const { color, bgcolor } = require('./lib/color')
-const { fetchJson } = require('./lib/fetcher')
+const { fetchJson, uploadImages } = require('./lib/fetcher')
 const { recognize } = require('./lib/ocr')
 const { error } = require("qrcode-terminal")
 const { exif } = require('./lib/exif')
@@ -56,7 +60,7 @@ const vcard = 'BEGIN:VCARD\n'
             + 'VERSION:3.0\n' 
             + 'FN:Owner\n' 
             + 'ORG: Creator Botol BOT;\n' 
-            + 'TEL;type=CELL;type=VOICE;waid=${config.ownerNumber}:${config.ownerNumber}\n' 
+            + 'TEL;type=CELL;type=VOICE;waid=${config.ownerNumber}:${config.ownerNumberr}\n' 
             + 'END:VCARD'
 
 prefix = '.'
@@ -188,6 +192,7 @@ async function starts() {
             const sendPtt = (audio) => {
       			client.sendMessage(from, audio, mp3, { quoted: mek })
       		}
+      		  
         		const fakestatus = (teks) => {
         			client.sendMessage(from, teks, text, {
         				quoted: {
@@ -278,6 +283,26 @@ async function starts() {
                         fakestatus(stdout)
                       }
                     })
+                    break
+                    case 'play':
+                    if (!q) return fakegroup(mess.wrongFormat)
+                    data = await fetchJson(`https://api.vhtear.com/ytmp3?query=${q}&apikey=${config.vhtearkey}`, { method: 'get' })
+                    playmp3 = data.result
+                    var teks = `• Judul : ${playmp3.title}
+• Duration : ${playmp3.duration}
+• Size : ${playmp3.size}
+• Ext : ${playmp3.ext}
+• Id : ${playmp3.id}
+• Link : ${playmp3.mp3}
+• Source : ${playmp3.url}`
+                    
+                    const playing = { key: { participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {}) }, message: { "imageMessage": { "url": "https://mmg.whatsapp.net/d/f/At0x7ZdIvuicfjlf9oWS6A3AR9XPh0P-hZIVPLsI70nM.enc", "mimetype": "image/jpeg", "caption": `*Duration* : ${playmp3.duration}\n*Size* : ${playmp3.size}\n*Ext* : ${playmp3.ext}`, "fileSha256": "+Ia+Dwib70Y1CWRMAP9QLJKjIJt54fKycOfB2OEZbTU=", "fileLength": "28777", "height": 1080, "width": 1079, "mediaKey": "vXmRR7ZUeDWjXy5iQk17TrowBzuwRya0errAFnXxbGc=", "fileEncSha256": "sR9D2RS5JSifw49HeBADguI23fWDz1aZu4faWG/CyRY=", "directPath": "/v/t62.7118-24/21427642_840952686474581_572788076332761430_n.enc?oh=3f57c1ba2fcab95f2c0bb475d72720ba&oe=602F3D69", "mediaKeyTimestamp": "1610993486", "jpegThumbnail": fs.readFileSync('./src/image/thumbnail.jpeg') } } }
+                    
+                    thumb = await getBuffer(playmp3.image)
+                    fakestatus(mess.wait)
+                    client.sendMessage(from, thumb, image, { caption: `${teks}`, quoted: playing })
+                    bufferss = await getBuffer(playmp3.mp3)
+                    client.sendMessage(from, bufferss, MessageType.audio, { mimetype: 'audio/mp4', filename: `${playmp3.title}.mp3`, quoted: playing })
                     break
                     case 'ping':
                               const timestamp = speed();
@@ -484,7 +509,7 @@ async function starts() {
                             fs.unlinkSync(ran)
                           })
                         })
-                        .addOutputOptions([`-vcodec`, `libwebp`, `-vf`, `scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+                        .addOutputOptions([`-vcodec`, `libwebp`, `-vf`, `scale='min(512,iw)':min'(512,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
                         .toFormat('webp')
                         .save(ran)
                     } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
@@ -577,7 +602,7 @@ async function starts() {
                             const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace("quotedM","m")).message.extendedTextMessage.contextInfo : mek
                             const media = await client.downloadMediaMessage(encmedia, 'buffer')
                             const getUrl = await uploadImages(media, false)
-                            sendMess(from, `${getUrl}`)
+                            client.sendMessage(from, `${getUrl}`)
                         }
                         break
                     case 'wait':
@@ -754,7 +779,7 @@ async function starts() {
 • ${prefix}owner - > Dapatkan kontak owner
 • ${prefix}kontak - > Kirim Kontak
 • ${prefix}tomp3 - > Video jadi mp3
-• ${prefix}tr - > Terjemah bahasa asing `)
+• ${prefix}play - > Download music whit yt`)
                     break
                           case 'donasi':
                             fakestatus('Halo kak mau donasi?\nBoleh banget kak, list untuk pembayaran donasi ada dibawah in.\n\n• Dana : +62 878-9151-8799\n• Gopay : +62 878-9151-8799\n• Pulsa : +62 878-9151-8799\n\nTerimakasih sudah berdonasi, uangnya untuk memperpanjang server bot.')
