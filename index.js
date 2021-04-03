@@ -318,7 +318,7 @@ async function starts() {
                                 quotedMessage: {
                                     documentMessage: {
                                         fileName: fake,
-                                        jpegThumbnail: gambar64,
+                                        jpegThumbnail: fs.readFileSync('./src/image/thumbnail.jpeg'),
                                         mimetype: 'application/pdf',
                                         pageCount: 200
                                     }
