@@ -7,11 +7,7 @@
     "lib": "lib"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@adiwajshing/baileys": "^3.3.0",
-=======
     "@adiwajshing/baileys": "^3.5.0",
->>>>>>> 0197481 (Fix bugs sticker)
     "async": "^2.4.1",
     "axios": "^0.21.1",
     "cfonts": "^2.9.1",
@@ -19,10 +15,7 @@
     "escape-string-regexp": "^1.0.5",
     "exif": "^0.6.0",
     "fake-useragent": "^1.0.1",
-<<<<<<< HEAD
-=======
     "figlet": "^1.5.0",
->>>>>>> 0197481 (Fix bugs sticker)
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^9.1.0",
     "image-to-base64": "^2.1.1",
@@ -41,33 +34,11 @@
     "request": "^2.81.0",
     "spinnies": "^0.5.1",
     "supervisor": "^0.12.0",
-<<<<<<< HEAD
-    "tiktok-scraper": "^1.4.7",
-=======
     "tiktok-scraper": "^1.4.22",
->>>>>>> 0197481 (Fix bugs sticker)
     "ytdl-core": "^4.4.0"
   },
   "scripts": {
     "start": "node index",
-<<<<<<< HEAD
-    "test": "supervisor index"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/suryapardana"
-  },
-  "keywords": [
-    "Botol Bot"
-  ],
-  "author": "Angga",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/suryapardana"
-  },
-  "homepage": "https://github.com/suryapardana"
-}
-=======
     "test": "supervisor angga"
   },
   "repository": {
@@ -84,4 +55,3 @@
   },
   "homepage": "https://github.com/progsysdriver"
 }
->>>>>>> 0197481 (Fix bugs sticker)
