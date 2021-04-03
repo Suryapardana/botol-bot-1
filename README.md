@@ -24,11 +24,11 @@ Just for fun 😎
 }
 ```
 
-## Ganti prefix, Fake reply, Target fake, Gambar
+## Ganti prefix, Fake reply, Target fake
 ```sh
 prefix = '.'
 fake = 'BOTOL BOT'
-numbernye = '0'
+numbernya = '0'
 ```
 
 Di [index.js](https://github.com/progsysdriver/botol-bot/blob/5e2230786d9d20983a5e7eea968006d782d92958/index.js#L61)
@@ -68,6 +68,10 @@ node index.js
 
 | ketersediaan  |  Fitur |
 | :-----------: | :----: |
+|       ☑      | Donasi |
+|       ☑      | Info |
+|       ☑      | Speed |
+|       ☑      | Owner |
 |       ☑      | hidetag |
 |       ☑      | Forward Message |
 |       ☑      | Eval |
@@ -89,15 +93,8 @@ node index.js
 |       ☑      | Delete the message |
 |       ☑      | hilih |
 |       ☑      | Forward to  |
-|       ☑      | Group management  |
-|       ☑      | Contact tag  |
 |       ☑      | Video to mp3  |
 |       ☑      | Translate  |
-|       ☑      | Sticker Thug life  |
-|       ☑      | Sticker To be continued |
-|       ☑      | Sticker wasted |
-|       ☑      | Sticker trigger |
-|       ☑      | Photo Couple  |
 
 ## Terima Kasih
 - [MhankBarBar](https://github.com/github.com/MhankBarBar)
